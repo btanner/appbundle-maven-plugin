@@ -4,11 +4,11 @@
   <groupId>sh.tak.appbundler</groupId>
   <artifactId>appbundle-maven-plugin</artifactId>
   <packaging>maven-plugin</packaging>
-  <version>1.2.1-SNAPSHOT</version>
+  <version>1.2.2-BTANNER</version>
 
   <name>appbundle-maven-plugin</name>
-  <url>https://github.com/federkasten/appbundle-maven-plugin</url>
-  <description>Maven plugin that creates an Application Bundle for OS X containing all your project dependencies and the necessary metadata</description>
+  <url>https://github.com/btanner/appbundle-maven-plugin</url>
+  <description>Maven plugin that creates an Application Bundle for OS X containing all your project dependencies and the necessary metadata. Btanner fixed submodule problem.</description>
 
   <parent>
     <groupId>org.sonatype.oss</groupId>
