@@ -579,7 +579,7 @@ public class CreateApplicationBundleMojo extends AbstractMojo {
      */
     private void writeInfoPlist(File infoPlist, List<String> files) throws MojoExecutionException {
         Velocity.setProperty(Velocity.RUNTIME_LOG_LOGSYSTEM, new MojoLogChute(this));
-        Velocity.setProperty("file.resource.loader.path", TARGET_CLASS_ROOT);
+        Velocity.setProperty("file.resource.loader.path", "");
 
         try {
             Velocity.init();
@@ -649,14 +649,16 @@ public class CreateApplicationBundleMojo extends AbstractMojo {
         velocityContext.put("classpath", jarFiles.toString());
         try {
             File sourceInfoPlist = new File(TARGET_CLASS_ROOT, dictionaryFile);
-
+            if (!sourceInfoPlist.isAbsolute() && !sourceInfoPlist.exists()) {
+                sourceInfoPlist = new File(project.getBasedir(), sourceInfoPlist.getPath());
+            }
             if (sourceInfoPlist.exists() && sourceInfoPlist.isFile()) {
                 String encoding = detectEncoding(sourceInfoPlist);
                 getLog().debug("Detected encoding " + encoding + " for dictionary file " + dictionaryFile);
 
                 Writer writer = new OutputStreamWriter(new FileOutputStream(infoPlist), encoding);
 
-                Template template = Velocity.getTemplate(dictionaryFile, encoding);
+                Template template = Velocity.getTemplate(sourceInfoPlist.getAbsolutePath(), encoding);
                 template.merge(velocityContext, writer);
 
                 writer.close();
